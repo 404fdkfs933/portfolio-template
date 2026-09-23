@@ -16,7 +16,7 @@ export const site = {
   /** Shown on the contact page and in the footer. */
   email: "hello@example.com",
   /** Where the site lives once deployed. Used for sitemap and social previews. */
-  url: "https://your-portfolio.vercel.app",
+  url: "https://art-portfolio-template.vercel.app",
   /** Short description for search engines and link previews. */
   description: "The portfolio of Your Name: paintings, prints and works on paper.",
   /** Optional. Leave the array empty to hide the block. */
