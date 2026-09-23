@@ -1,0 +1,23 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+/build
+
+# misc
+.DS_Store
+*.pem
+npm-debug.log*
+*.tsbuildinfo
+next-env.d.ts
+
+# env files
+.env*
+
+# vercel
+.vercel
+
+# full-resolution originals never go in the repo; keep them elsewhere
+design/originals/
