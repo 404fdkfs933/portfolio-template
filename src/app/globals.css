@@ -402,8 +402,11 @@ html, body { overflow-x: clip; }
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: clamp(1.1rem, 4vw, 2.25rem);
-  padding-inline: clamp(1.1rem, 4vw, 2.25rem);
+  /* The first image lines up with the text gutter (.shell is centred to
+     1200px THEN padded), and the row runs off the right edge of the window. */
+  --slider-gutter: calc(max(0px, (100vw - 1200px) / 2) + clamp(1.1rem, 4vw, 2.25rem));
+  scroll-padding-inline: var(--slider-gutter);
+  padding-inline: var(--slider-gutter);
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -423,7 +426,7 @@ html, body { overflow-x: clip; }
   display: block;
 }
 /* The last item gets a phantom margin so it can scroll fully into the gutter. */
-.slider-item:last-child { margin-right: clamp(1.1rem, 4vw, 2.25rem); }
+.slider-item:last-child { margin-right: var(--slider-gutter); }
 
 .slider-btn {
   display: grid;

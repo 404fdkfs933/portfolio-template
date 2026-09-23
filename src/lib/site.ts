@@ -8,7 +8,7 @@ export const site = {
   /** The one-line statement in the hero. `accent` is the phrase set in gold. */
   statement: {
     before: "Paintings, prints and the occasional",
-    accent: "wall-sized mistake",
+    accent: "oversized mistake",
     after: ".",
   },
   /** One or two sentences under the statement. */
