@@ -72,7 +72,28 @@ def compose(w: int, h: int, palette: list[str], seed: int) -> Image.Image:
     return img
 
 
+def portrait(w: int = 1800, h: int = 2200) -> Image.Image:
+    """A stand-in for the photo of you on the home and About pages: a soft grey studio wall."""
+    img = Image.new("RGB", (w, h), "#ededed")
+    d = ImageDraw.Draw(img)
+    for y in range(h):
+        t = y / h
+        g = int(236 - 26 * t)
+        d.line([(0, y), (w, y)], fill=(g, g, g))
+    # a soft pool of light where a person would stand
+    light = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(light).ellipse([w * 0.2, h * 0.08, w * 0.8, h * 0.75], fill=90)
+    light = light.filter(ImageFilter.GaussianBlur(w // 8))
+    img = Image.composite(Image.new("RGB", (w, h), "#fafafa"), img, light)
+    d = ImageDraw.Draw(img)
+    d.text((40, h - 60), "portrait · replace public/portrait.jpg with a photo of you", fill="#8a8a8a")
+    return img
+
+
 def main() -> None:
+    path = ROOT.parent / "portrait.jpg"
+    portrait().save(path, "JPEG", quality=86, optimize=True, progressive=True)
+    print(f"{path.relative_to(ROOT.parent.parent)}  {path.stat().st_size // 1024} KB")
     for slug, (palette, sizes) in PROJECTS.items():
         out = ROOT / slug
         out.mkdir(parents=True, exist_ok=True)

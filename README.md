@@ -1,19 +1,20 @@
 # Portfolio template
 
-A portfolio site for an artist: a main section with your name and a statement, then one full-bleed band per series, each with a swipeable slider of that series' pieces. Every series also gets its own page with every piece at full size.
+A portfolio site for an artist. The home page opens on a full-screen photo of you with your name set huge in the corner, then runs sideways through one full-screen slide per featured series as you scroll, then lands on a two-column grid of every series. Each series gets its own page: a column that stays put with the title and statement, and every piece in two columns beside it.
 
-Built with Next.js, deployed on Vercel for free, edited with Claude Code. The look comes from [southofordinary.dev](https://southofordinary.dev): warm paper by day, deep navy at night, one gold accent, three typefaces.
+Built with Next.js, deployed on Vercel for free, edited with Claude Code. The look is modelled on [karimrashid.com](https://www.karimrashid.com): white rooms, heavy condensed black type, one loud colour for the signature and links, a menu that slides in from the right. The pictures carry the colour; the page stays out of their way.
 
-## Make it yours in four edits
+## Make it yours in five edits
 
-1. **`src/lib/site.ts`** — your name, statement, intro line, email, social links, site URL.
-2. **`public/art/<series>/`** — one folder per series, web-sized JPEGs numbered in the order you want them shown (`01.jpg`, `02.jpg`…). Longest side about 2400 px, quality about 85, under 2 MB each. Keep full-resolution originals out of the repo (`design/originals/` is ignored by git).
-3. **`content/projects/<series>.md`** — one file per series: title, year, medium, a two-sentence summary, and the list of images with a description (`alt`) and an optional caption. Anything under the frontmatter is the series statement. The three sample files show the shape.
-4. **`content/about.md`** — your story.
+1. **`src/lib/site.ts`** — your name (and how it breaks across lines), the About opener, email, address, social links, site URL. Point `logo` at a signature image if you have one; otherwise your name is written in the handwriting face.
+2. **`public/portrait.jpg`** — a photo of you or your studio, portrait or landscape, about 2400 px on the long side. It fills the first screen of the home page and the About page. Describe it in `portraitAlt`.
+3. **`public/art/<series>/`** — one folder per series, web-sized JPEGs numbered in the order you want them shown (`01.jpg`, `02.jpg`…). Longest side about 2400 px, quality about 85, under 2 MB each. Keep full-resolution originals out of the repo (`design/originals/` is ignored by git).
+4. **`content/projects/<series>.md`** — one file per series: title, year, medium, a two-sentence summary, and the list of images with a description (`alt`) and an optional caption. Anything under the frontmatter is the series statement. The three sample files show the shape.
+5. **`content/about.md`** — your story.
 
 Then delete the three sample series (their folders in `public/art/` and files in `content/projects/`) and `scripts/make-samples.py`.
 
-Colours live at the top of `src/app/globals.css`; fonts in `src/app/layout.tsx`. Change the tokens, not the components.
+Colours live at the top of `src/app/globals.css` (`--accent` is the one that matters); fonts in `src/app/layout.tsx`. Change the tokens, not the components.
 
 ## Run it
 

@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getNeighbours, getProject, getProjects } from "@/lib/content";
 import { Mdx } from "@/lib/mdx";
-import { Reveal } from "@/components/motion";
 
 export const dynamicParams = false;
 
@@ -25,6 +23,11 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
   };
 }
 
+/**
+ * One series. A column on the left that stays put while you scroll (title set
+ * huge, medium, year, the statement, a way back to all work) and every piece
+ * on the right in two columns, each at a good size with its caption under it.
+ */
 export default async function Page({ params }: PageProps<"/work/[slug]">) {
   const { slug } = await params;
   const project = getProject(slug);
@@ -32,71 +35,63 @@ export default async function Page({ params }: PageProps<"/work/[slug]">) {
   const { prev, next } = getNeighbours(slug);
 
   return (
-    <article className="shell pt-8 md:pt-12">
-      <nav className="label mb-6 flex items-center gap-2" aria-label="Breadcrumb">
-        <Link href="/work" className="hover:text-ink">Work</Link>
-        <span aria-hidden>/</span>
-        <span className="text-ink-2">{project.title}</span>
-      </nav>
-
-      <header className="max-w-[46rem]">
-        <p className="label mb-4">
-          {project.year} · {project.medium}
-        </p>
-        <h1 className="font-display font-semibold text-[2.1rem] leading-[1.07] tracking-[-0.02em] text-ink md:text-[2.9rem]">{project.title}</h1>
-        <p className="mt-4 max-w-[60ch] text-[1.12rem] leading-relaxed text-ink-2">{project.summary}</p>
-      </header>
-
-      {/* Every piece, large, in order. */}
-      <div className="mt-10 grid gap-10 md:gap-14">
-        {project.images.map((img, i) => (
-          <Reveal key={img.src}>
-            <figure className="grid gap-3">
-              <div className="panel ticks overflow-hidden">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  width={img.width}
-                  height={img.height}
-                  sizes="(min-width: 1200px) 1130px, 100vw"
-                  priority={i === 0}
-                  className="h-auto w-full"
-                />
+    <article>
+      <div className="grid lg:grid-cols-[minmax(280px,30vw)_1fr]">
+        <aside className="series-side gutter pt-28 pb-10 lg:pt-32 lg:pb-12">
+          <div>
+            <h1 className="display text-[clamp(3rem,6.5vw,6rem)]">{project.title}</h1>
+            <dl className="mt-8 text-[0.95rem] leading-relaxed">
+              <div>
+                <dt className="sr-only">Medium</dt>
+                <dd className="font-semibold text-ink">{project.medium}</dd>
               </div>
-              <figcaption className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-[0.88rem] text-ink-2">
-                <span className="font-mono text-[0.68rem] text-ink-3">{String(i + 1).padStart(2, "0")}</span>
-                {img.caption ? <span>{img.caption}</span> : null}
-              </figcaption>
+              <div>
+                <dt className="sr-only">Year</dt>
+                <dd className="text-ink-3">{project.year}</dd>
+              </div>
+            </dl>
+            <p className="mt-6 max-w-[34ch] text-[0.95rem] leading-relaxed text-ink-2">{project.summary}</p>
+            {project.body.trim() ? (
+              <div className="prose mt-6 max-w-[38ch] text-[0.95rem]">
+                <Mdx source={project.body} />
+              </div>
+            ) : null}
+          </div>
+          <Link href="/work" className="label mt-10 inline-flex items-center gap-3 hover:text-accent-ink">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" aria-hidden>
+              <rect x="0" y="0" width="6" height="6" /><rect x="8" y="0" width="6" height="6" /><rect x="0" y="8" width="6" height="6" /><rect x="8" y="8" width="6" height="6" />
+            </svg>
+            All work
+          </Link>
+        </aside>
+
+        <div className="grid gap-px bg-line sm:grid-cols-2">
+          {project.images.map((img, i) => (
+            <figure key={img.src} className="bg-bg">
+              <div className="relative aspect-[4/3] overflow-hidden bg-bg-2">
+                <Image src={img.src} alt={img.alt} fill sizes="(min-width: 1024px) 35vw, (min-width: 640px) 50vw, 100vw" className="object-cover" priority={i < 2} />
+              </div>
+              {img.caption ? <figcaption className="px-4 py-3 text-[0.78rem] text-ink-3">{img.caption}</figcaption> : null}
             </figure>
-          </Reveal>
-        ))}
+          ))}
+        </div>
       </div>
 
-      {project.body.trim() ? (
-        <section className="mt-16 max-w-[46rem]">
-          <p className="label mb-4">About this series</p>
-          <div className="prose">
-            <Mdx source={project.body} />
-          </div>
-        </section>
-      ) : null}
-
+      {/* Before and after this one, in display order. */}
       {prev && next ? (
-        <nav className="mt-20 grid gap-4 border-t border-line pt-8 sm:grid-cols-2" aria-label="Other series">
-          <Link href={prev.href} className="group flex items-center gap-3 text-ink-2 hover:text-accent-ink">
-            <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-0.5" />
-            <span>
-              <span className="label block">Previous</span>
-              <span className="text-ink">{prev.title}</span>
-            </span>
-          </Link>
-          <Link href={next.href} className="group flex items-center justify-end gap-3 text-right text-ink-2 hover:text-accent-ink">
-            <span>
-              <span className="label block">Next</span>
-              <span className="text-ink">{next.title}</span>
-            </span>
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+        <nav className="grid border-t border-line md:grid-cols-2" aria-label="Other series">
+          {[
+            { p: prev, label: "Previous" },
+            { p: next, label: "Next" },
+          ].map(({ p, label }) => (
+            <Link key={label} href={p.href} className="tile !aspect-[16/7]">
+              <Image src={p.cover.src} alt={p.cover.alt} width={p.cover.width} height={p.cover.height} sizes="(min-width: 768px) 50vw, 100vw" />
+              <div className="tile-copy relative z-10">
+                <p className="label">{label}</p>
+                <h2 className="display tile-title mt-2 !text-[clamp(2.2rem,4.5vw,4.5rem)]">{p.title}</h2>
+              </div>
+            </Link>
+          ))}
         </nav>
       ) : null}
     </article>
