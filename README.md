@@ -16,6 +16,12 @@ Then delete the three sample series (their folders in `public/art/` and files in
 
 Colours live at the top of `src/app/globals.css` (`--accent` is the one that matters); fonts in `src/app/layout.tsx`. Change the tokens, not the components.
 
+## Built for an AI coding agent
+
+This repo is meant to be handed to Claude Code, Codex, Cursor or any agent that reads a repo, with the sentence "make this my site" and the five answers above. `AGENTS.md` tells the agent where everything lives and what it must never touch (your images, for one). Colours are tokens in one place, content is Markdown with a schema, a checker runs before every build, and `public/llms.txt` explains the site to assistants once it is live. Nothing in the components needs editing to make the site yours.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2F404fdkfs933%2Fportfolio-template)
+
 ## Run it
 
 ```

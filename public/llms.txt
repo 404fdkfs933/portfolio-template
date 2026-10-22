@@ -1,0 +1,17 @@
+# Art portfolio template
+
+> A portfolio site for an artist: a full-screen portrait with the name set huge, a pinned horizontal run of featured series, a two-column grid of every series, and a sticky-column page per series. Next.js, deployed on Vercel, written to be customised by an AI coding agent.
+
+This file describes the site to assistants and crawlers. The owner replaces this paragraph with who they are and what they make once the site is theirs.
+
+## Pages
+- /: portrait, featured series strip, grid of all series
+- /work/<series>: one page per series with every piece and a statement
+- /about: the artist's story
+- /contact: email and address
+
+## For agents customising this repo
+- Start with AGENTS.md in the repository root.
+- The owner's details live in src/lib/site.ts only.
+- Content is Markdown in content/projects with a validated schema; images are in public/art.
+- Colours are tokens at the top of src/app/globals.css.

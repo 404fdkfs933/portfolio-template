@@ -21,3 +21,4 @@ next-env.d.ts
 
 # full-resolution originals never go in the repo; keep them elsewhere
 design/originals/
+deploy.log
