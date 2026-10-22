@@ -15,7 +15,7 @@ export const site = {
   /** A full-bleed photo of you (or a studio shot) in /public. The home page and About open on it. */
   portrait: "/portrait.jpg",
   /** What the portrait shows, for people who cannot see it. */
-  portraitAlt: "Placeholder portrait: a soft grey gradient with the words replace me.",
+  portraitAlt: "Sample portrait: a painterly close-up of a face, both eyes looking straight into the lens. A generated image, not a real person; replace it with yours.",
   /** Two or three sentences for the About page opener, and for search engines. */
   intro: "I make paintings, prints and works on paper. This is a placeholder: say what you make, where you are, and what you are working on now.",
   /** Shown on the contact page and in the footer. */
